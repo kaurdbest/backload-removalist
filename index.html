@@ -17,6 +17,32 @@
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
+<!-- ============ ENTRY EMAIL POPUP ============ -->
+<div class="entry-popup" id="entryPopup" role="dialog" aria-modal="true" aria-labelledby="entryPopupTitle" hidden>
+  <div class="entry-popup-backdrop" id="entryPopupBackdrop"></div>
+  <div class="entry-popup-card">
+    <button class="entry-popup-close" id="entryPopupClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <svg class="entry-popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    <h3 id="entryPopupTitle" class="h-md">Planning an interstate move?</h3>
+    <p>Leave your email and we'll reach out to help you get your maximum price — no obligation, no spam.</p>
+    <form id="entryPopupForm">
+      <div class="field">
+        <label for="entryPopupEmail" class="visually-hidden">Email</label>
+        <input type="email" id="entryPopupEmail" name="email" placeholder="you@example.com" required autocomplete="email">
+      </div>
+      <input type="text" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="New website visitor — email signup">
+      <input type="hidden" name="from_name" value="Backload Removalist Website">
+      <button type="submit" class="btn btn-primary btn-block">Notify Me</button>
+      <div class="entry-popup-status" id="entryPopupStatus" role="status" aria-live="polite"></div>
+    </form>
+    <button class="entry-popup-dismiss" id="entryPopupDismiss">No thanks, just browsing</button>
+  </div>
+</div>
+
 <!-- ============ TOP BAR ============ -->
 <div class="topbar">
   <div class="container">
@@ -366,14 +392,20 @@
           </div>
 
           <div class="field-grid two" style="margin-top:var(--space-sm)">
-            <div class="field">
+            <div class="field place-field">
               <label for="moveFrom">Moving from*</label>
-              <input type="text" id="moveFrom" name="moveFrom" placeholder="Suburb, State" required>
+              <div class="place-autocomplete">
+                <input type="text" id="moveFrom" name="moveFrom" placeholder="Start typing a suburb…" autocomplete="off" required>
+                <ul class="place-suggestions" role="listbox" aria-label="Suburb suggestions"></ul>
+              </div>
               <div class="field-error"></div>
             </div>
-            <div class="field">
+            <div class="field place-field">
               <label for="moveTo">Moving to*</label>
-              <input type="text" id="moveTo" name="moveTo" placeholder="Suburb, State" required>
+              <div class="place-autocomplete">
+                <input type="text" id="moveTo" name="moveTo" placeholder="Start typing a suburb…" autocomplete="off" required>
+                <ul class="place-suggestions" role="listbox" aria-label="Suburb suggestions"></ul>
+              </div>
               <div class="field-error"></div>
             </div>
           </div>
@@ -460,6 +492,7 @@
   <a href="#quote" class="btn btn-primary">Get Quote</a>
 </div>
 
+<script src="js/au-suburbs.js" defer></script>
 <script src="js/script.js" defer></script>
 </body>
 </html>
