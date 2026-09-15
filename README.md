@@ -14,13 +14,11 @@ Your photos, video, and logo (from `images/`) are already wired in:
 
 ## Still to do before this fully goes live
 
-**1. Turn on the quote form:**
-- Go to https://web3forms.com/ and enter your email to get a free access key (no account/login needed).
-- In `index.html`, find `REPLACE_WITH_WEB3FORMS_ACCESS_KEY` and paste your key in.
-- Submissions will then email straight to whatever address you registered with Web3Forms.
-
-**2. Confirm the real interstate routes:**
+**1. Confirm the real interstate routes:**
 - In `index.html`, search for `ROUTE LIST` and swap the placeholder state-pairs for the real ones.
+
+Done already:
+- Quote form and the entry popup are both wired to a live Web3Forms access key — submissions from either one email straight to Backloadremovalist@gmail.com. The same key is reused across both forms, which is supported (a Web3Forms key isn't tied to a single form).
 
 ## Logo note
 The header uses a cropped/matted version of your real `Logo.jpeg`. The footer still uses a hand-built SVG recreation of the same mark (in navy-square form) because it needs to sit on a dark background — a plain crop of the logo has a light backing that doesn't read well on navy. If you get a proper transparent-background export of the logo from your designer, it can replace both.
