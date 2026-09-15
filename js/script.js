@@ -45,7 +45,49 @@
     }
 
     if (!alreadySeen()) {
-      setTimeout(open, 1200);
+      var TIME_TRIGGER_MS = 20000;
+      var SCROLL_TRIGGER_RATIO = 0.5;
+      var EXIT_INTENT_ARM_DELAY_MS = 4000;
+      var timeTimer = null;
+      var exitIntentArmed = false;
+      var hasRealMouseMove = false;
+
+      function triggerOnce() {
+        cleanupTriggers();
+        open();
+      }
+
+      function onScroll() {
+        var doc = document.documentElement;
+        var scrolled = (window.scrollY + window.innerHeight) / doc.scrollHeight;
+        if (scrolled >= SCROLL_TRIGGER_RATIO) triggerOnce();
+      }
+
+      function onFirstMouseMove() {
+        hasRealMouseMove = true;
+        document.removeEventListener('mousemove', onFirstMouseMove);
+      }
+
+      function onExitIntent(e) {
+        // Mouse leaving through the top of the viewport, heading for the tab/address bar —
+        // only counts once the page has settled and a real cursor has actually moved,
+        // to avoid firing on stray/synthetic events right after load.
+        if (!exitIntentArmed || !hasRealMouseMove) return;
+        if (e.clientY <= 0 && !e.relatedTarget && !e.toElement) triggerOnce();
+      }
+
+      function cleanupTriggers() {
+        window.removeEventListener('scroll', onScroll);
+        document.removeEventListener('mouseout', onExitIntent);
+        document.removeEventListener('mousemove', onFirstMouseMove);
+        if (timeTimer) clearTimeout(timeTimer);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('mousemove', onFirstMouseMove);
+      document.addEventListener('mouseout', onExitIntent);
+      setTimeout(function () { exitIntentArmed = true; }, EXIT_INTENT_ARM_DELAY_MS);
+      timeTimer = setTimeout(triggerOnce, TIME_TRIGGER_MS);
     }
 
     closeBtn.addEventListener('click', close);
